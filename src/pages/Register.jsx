@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../axios";
+import { toast } from "react-toastify";
 
 export default function Register(){
 
@@ -23,13 +24,16 @@ export default function Register(){
                 password
             });
 
-            setMessage(response.data.message);
+            //setMessage(response.data.message);
+            toast.success(response.data.message);
             navigate('/login');
         } catch(e) {
             if(error.response && error.response.data.message){
-                setMessage(error.response.data.message);
+                //setMessage(error.response.data.message);
+                toast.error(error.response.data.message);
             }else{
-                setMessage("Something went wrong");
+                //setMessage("Something went wrong");
+                toast.error("Something went wrong");
             }
         } finally {
             setLoading(false);
@@ -50,9 +54,9 @@ export default function Register(){
                     <input className="w-full outline-none bg-transparent py-2.5" id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" required />
                 </div>
                 <button type="submit" className="w-full mb-3 bg-indigo-500 hover:bg-indigo-600/90 transition py-2.5 rounded text-white font-medium">{loading ? "Submitting..." : "Register"}</button>
-                {message && (
+                {/* {message && (
                     <p>{message}</p>
-                )}
+                )} */}
                 <p className="text-center mt-4">Already have an account? <Link to="/login" className="text-blue-500 underline">Login</Link></p>
             </form>
         </div>
