@@ -3,9 +3,11 @@ import api from '../axios';
 import DashboardLayout from "../components/DashboardLayout";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 export default function AddTask() {
 
+    const {token,user} = useAuth();
     const [projects, setProjects] = useState([]);
     const [projectId, setProjectId] = useState("");
     const [title, setTitle] = useState("");
@@ -17,7 +19,6 @@ export default function AddTask() {
     useEffect(() => {   
         const fetchProjects = async () => {
             try {
-                const token = localStorage.getItem('token');
                 const response = await api.get('/projects', {
                     headers : {
                         Authorization: `Bearer ${token}`,
@@ -39,7 +40,6 @@ export default function AddTask() {
         setLoading(true);
 
         try {
-            const token = localStorage.getItem('token');
             await api.post('/tasks', {
                 project_id: projectId,
                 title: title,

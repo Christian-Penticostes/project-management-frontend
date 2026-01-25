@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { useParams } from "react-router-dom";
 import api from "../axios";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProjectDetails() {
 
     const {id} = useParams();
+    const {token,user} = useAuth();
     const [projectDetails, setProjectDetails] = useState([]);
 
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const token = localStorage.getItem('token');
                 const response = await api.get(`/projects/${id}`, {
                     headers : {
                         Authorization : `Bearer ${token}`,
