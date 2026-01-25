@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from '../axios';
 import DashboardLayout from "../components/DashboardLayout";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function EditTask() {
 
@@ -66,11 +67,11 @@ export default function EditTask() {
                 }
             });
 
-            alert("Task Updated Successfully");
+            toast.success("Task Updated Successfully");
             navigate('/tasks')
         } catch (error) {
             console.log("Error editing task: ", error);
-            alert("Failed to edited task");
+            toast.error("Failed to edited task");
         } finally {
             setLoading(true);
         }

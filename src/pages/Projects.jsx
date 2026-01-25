@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from '../axios';
 import DashboardLayout from "../components/DashboardLayout";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Projects() {
 
@@ -41,7 +42,7 @@ export default function Projects() {
 
             setProjects(projects.filter((project) => project.id !== id));
 
-            alert("Project Deleted Successfully");
+            toast.success("Project Deleted Successfully");
         } catch (error) {
             console.log("Error deleting project", error);
             alert("Something went wrong with deleting the project");

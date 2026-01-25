@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from '../axios';
 import DashboardLayout from "../components/DashboardLayout";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function AddTask() {
 
@@ -50,11 +51,11 @@ export default function AddTask() {
                 }
             });
 
-            alert("Task Added Successfully");
+            toast.success("Task Added Successfully");
             navigate('/tasks')
         } catch (error) {
             console.log("Error adding task: ", error);
-            alert("Failed to added task");
+            toast.error("Failed to added task");
         } finally {
             setLoading(true);
         }
