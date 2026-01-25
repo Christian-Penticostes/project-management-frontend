@@ -4,6 +4,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { editProject } from "../services/projectService";
 
 export default function EditProject() {
 
@@ -19,11 +20,7 @@ export default function EditProject() {
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const response = await api.get(`/projects/${id}`, {
-                    headers : {
-                        Authorization : `Bearer ${token}`,
-                    }
-                });
+                const response = await editProject(id, token);
                 setTitle(response.data.name);
                 setDescription(response.data.description);
                 setDueDate(response.data.due_date);

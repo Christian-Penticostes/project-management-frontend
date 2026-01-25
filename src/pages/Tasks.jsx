@@ -4,6 +4,7 @@ import api from "../axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { deleteTask, getTasks } from "../services/taskService";
 
 export default function Tasks() {
 
@@ -14,11 +15,7 @@ export default function Tasks() {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await api.get('/tasks', {
-                    headers : {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await getTasks(token);
                 setTasks(response.data);
             } catch(error) {
                 console.log("Error fetching tasks: ", error);
@@ -34,12 +31,7 @@ export default function Tasks() {
         const confirmDelete = window.confirm("Are you sure want to delete this task?");
         if(!confirmDelete) return;
         try {
-            await api.delete(`tasks/${id}`, {
-                headers : {
-                    Authorization : `Bearer ${token}`,
-                }
-            });
-
+            await deleteTask(id, token);
             setTasks(tasks.filter((task) => task.id !== id));
 
             toast.success("Task Deleted Successfully");

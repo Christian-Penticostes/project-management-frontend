@@ -3,6 +3,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useParams } from "react-router-dom";
 import api from "../axios";
 import { useAuth } from "../context/AuthContext";
+import { getProjectDetails } from "../services/projectService";
 
 export default function ProjectDetails() {
 
@@ -13,11 +14,7 @@ export default function ProjectDetails() {
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const response = await api.get(`/projects/${id}`, {
-                    headers : {
-                        Authorization : `Bearer ${token}`,
-                    }
-                });
+                const response = await getProjectDetails(id, token);
                 setProjectDetails(response.data);
             } catch (error) {
                 console.log("Error loading project", error);

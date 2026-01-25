@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; 
 import api from "../axios";
 import { useAuth } from "../context/AuthContext";
+import { loginService } from "../services/authService";
 
 export default function Login() {
 
@@ -21,7 +22,7 @@ export default function Login() {
         console.log("Password : ", password);
 
         try {
-            const response = await api.post('/login', {
+            const response = await loginService({
                 email,
                 password
             });

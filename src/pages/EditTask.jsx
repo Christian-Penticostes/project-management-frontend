@@ -4,6 +4,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { updateTask } from "../services/taskService";
 
 export default function EditTask() {
 
@@ -55,17 +56,17 @@ export default function EditTask() {
         setLoading(true);
 
         try {
-            await api.put(`/tasks/${id}`, {
-                project_id: projectId,
-                title: title,
-                description: description,
-                due_date: dueDate,
-                status: status
-            }, {
-                headers : {
-                    Authorization : `Bearer ${token}`
-                }
-            });
+            await updateTask(
+            id,
+            {
+              project_id: projectId,
+              title,
+              description,
+              due_date: dueDate,
+              status,
+            },
+            token
+          );
 
             toast.success("Task Updated Successfully");
             navigate('/tasks')

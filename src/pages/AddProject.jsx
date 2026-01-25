@@ -4,6 +4,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { addProject } from "../services/projectService";
 
 export default function AddProject() {
 
@@ -19,15 +20,11 @@ export default function AddProject() {
         setLoading(true);
 
         try {
-            await api.post('/projects', {
-                name: title,
-                description: description,
-                due_date: dueDate
-            }, {
-                headers : {
-                    Authorization : `Bearer ${token}`
-                }
-            });
+            await addProject({
+              name: title,
+              description: description,
+              due_date: dueDate
+          }, token);
 
             toast.success("Project Added Successfully");
             navigate('/projects')
